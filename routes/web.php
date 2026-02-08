@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ZktecoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -35,3 +36,22 @@ Route::get('api-testing', function () {
 
     return response()->json($response->json());
 });
+
+
+// Add this to routes/web.php temporarily
+Route::get('/test-device', function () {
+    $ip = '110.93.226.240';
+    $zk = new \Rats\Zkteco\Lib\ZKTeco($ip);
+    
+    if ($zk->connect()) {
+        $version = $zk->version();
+        dd($zk);
+        return "Success! Connected to device. Firmware Version: " . $version;
+    } else {
+        return "Failed to connect to " . $ip;
+    }
+});
+
+
+
+Route::get('/zkteco/sync', [ZktecoController::class, 'sync']);
