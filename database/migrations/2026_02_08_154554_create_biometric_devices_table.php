@@ -12,8 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('biometric_devices', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+               $table->id();
+    $table->string('name');      
+    $table->string('ip_address'); 
+    $table->integer('port')->default(4370); // Default ZK port
+    $table->timestamps();
         });
     }
 
